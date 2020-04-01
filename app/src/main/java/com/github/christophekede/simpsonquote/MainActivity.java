@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-//quizz
+//dev
 public class MainActivity extends AppCompatActivity {
 
     @Override
