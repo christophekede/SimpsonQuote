@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SimpsonQuote</string>
+    <string name="main_text">Bienvenue sur mon application</string>
+    <string name="logo_descripton">Logo des Simpson</string>
 </resources>

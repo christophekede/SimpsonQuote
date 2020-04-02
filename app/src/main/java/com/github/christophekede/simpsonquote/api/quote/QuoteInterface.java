@@ -1,4 +1,4 @@
-package com.github.christophekede.simpsonquote.api;
+package com.github.christophekede.simpsonquote.api.quote;
 
 public interface QuoteInterface {
 
