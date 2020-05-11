@@ -1,5 +1,7 @@
 package com.github.christophekede.simpsonquote.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.github.christophekede.simpsonquote.DetailActivity;
+import com.github.christophekede.simpsonquote.MainActivity;
 import com.github.christophekede.simpsonquote.R;
 import com.github.christophekede.simpsonquote.server.QuoteResponse;
 import com.squareup.picasso.Picasso;
@@ -27,14 +31,19 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         public View layout;
         public ImageView image;
 
+        private final  Context context;
+
+
         public ViewHolder(View v) {
             super(v);
+
             layout = v;
             txtHeader = (TextView) v.findViewById(R.id.firstLine);
             txtFooter = (TextView) v.findViewById(R.id.secondLine);
             image = (ImageView) v.findViewById(R.id.icon);
 
 
+            context = v.getContext();
         }
     }
 
@@ -69,7 +78,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         final QuoteResponse currentQuote = values.get(position);
@@ -77,6 +86,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         holder.txtHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(holder.context, DetailActivity.class);
+                intent.putExtra("quote", currentQuote.getQuote());
+                intent.putExtra("character", currentQuote.getCharacter());
+                intent.putExtra("image", currentQuote.getImage());
+
+
+                holder.context.startActivity(intent);
                 remove(position);
             }
         });
