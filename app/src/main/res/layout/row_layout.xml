@@ -2,7 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
-    android:padding="6dip" >
+    android:padding="6dip"
+    android:layout_marginLeft="25dip"
+    >
 
     <ImageView
         android:id="@+id/icon"
@@ -23,20 +25,22 @@
         android:layout_toRightOf="@id/icon"
         android:ellipsize="marquee"
         android:text="Description"
-        android:textSize="12sp"
+        android:textSize="14sp"
+        android:background="#FFD90F"
         android:singleLine="true" />
 
     <TextView
         android:id="@+id/firstLine"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/secondLine"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
         android:layout_alignWithParentIfMissing="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="32dp"
         android:layout_toRightOf="@id/icon"
         android:gravity="center_vertical"
-        android:text="Example application"
+        android:text="Example application dffffffffffffffffffffffffffffff"
         android:textSize="16sp" />
 
 </RelativeLayout>

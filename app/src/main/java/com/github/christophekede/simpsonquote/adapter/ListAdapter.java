@@ -3,12 +3,14 @@ package com.github.christophekede.simpsonquote.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.christophekede.simpsonquote.R;
 import com.github.christophekede.simpsonquote.server.QuoteResponse;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -23,12 +25,15 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
          TextView txtHeader;
         public TextView txtFooter;
         public View layout;
+        public ImageView image;
 
         public ViewHolder(View v) {
             super(v);
             layout = v;
             txtHeader = (TextView) v.findViewById(R.id.firstLine);
             txtFooter = (TextView) v.findViewById(R.id.secondLine);
+            image = (ImageView) v.findViewById(R.id.icon);
+
 
         }
     }
@@ -76,7 +81,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             }
         });
 
-        holder.txtFooter.setText("Footer: " + currentQuote.getQuote());
+
+        holder.txtFooter.setText( currentQuote.getCharacter());
+        holder.image.setVisibility(View.GONE);
+        //Picasso.get().load(currentQuote.getImage()).into(holder.image);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
