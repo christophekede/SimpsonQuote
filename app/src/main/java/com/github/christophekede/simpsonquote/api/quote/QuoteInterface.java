@@ -12,4 +12,8 @@ public interface QuoteInterface {
 
     @GET("/quotes")
     Call<List<QuoteResponse>> loadQuotes(@Query("count") int numberOfQuotes);
+
+    @GET("/quotes")
+    Call<List<QuoteResponse>> loadRandomQuote();
+
 }

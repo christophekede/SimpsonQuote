@@ -1,5 +1,6 @@
 package com.github.christophekede.simpsonquote;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -8,8 +9,11 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.github.christophekede.simpsonquote.adapter.ListAdapter;
+import com.github.christophekede.simpsonquote.api.quote.QuoteCallback;
 import com.github.christophekede.simpsonquote.api.quote.QuoteInterface;
 import com.github.christophekede.simpsonquote.core.toast.Toaster;
+import com.github.christophekede.simpsonquote.server.ApiCaller;
+import com.github.christophekede.simpsonquote.server.ApiCallerResponse;
 import com.github.christophekede.simpsonquote.server.QuoteResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -29,11 +33,14 @@ public class MainActivity extends AppCompatActivity {
     private ListAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private static final String BASE_URL = "https://thesimpsonsquoteapi.glitch.me/";
-    private Toaster toaster = new Toaster();
+    private ApiCaller caller = new ApiCaller();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        caller = new ApiCaller();
+
         setContentView(R.layout.activity_main);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -50,55 +57,27 @@ public class MainActivity extends AppCompatActivity {
 
         mAdapter = new ListAdapter(input);
         recyclerView.setAdapter(mAdapter);
-        makeApiCall();
+        initialQuotes();
 
 
 
     }
 
-    private void makeApiCall(){
-        Gson gson = new GsonBuilder()
-                .setLenient()
-                .create();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        QuoteInterface quoteInterface = retrofit.create(QuoteInterface.class);
-
-        Call<List<QuoteResponse>> call = quoteInterface.loadQuotes(1);
-
-        call.enqueue(new Callback<List<QuoteResponse>>() {
+    private void initialQuotes(){
+        caller.getRandomQuote(new QuoteCallback() {
             @Override
-            public void onResponse(Call<List<QuoteResponse>> call, Response<List<QuoteResponse>> response) {
-                if(response.isSuccessful() && response.body() !=null){
-                    List<QuoteResponse> test = response.body();
-                    List<String> input = new ArrayList<>();
-
-                    for(int i = 0; i< test.size(); i++){
-                        input.add(test.get(i).getQuote());
-                    }
-                    Toast.makeText(getApplicationContext(),"Api sucess", Toast.LENGTH_SHORT).show();
-
-
-                    mAdapter = new ListAdapter(input);
-                    recyclerView.setAdapter(mAdapter);
-
-                }else{
-                    Toast.makeText(getApplicationContext(),"Error", Toast.LENGTH_SHORT).show();
-
+            public void onSuccess(ApiCallerResponse resp) {
+                if(resp.getStatus() == "ok"){
+                    Toaster.showToast(getApplicationContext(), "Yesysy");
                 }
-
             }
 
             @Override
-            public void onFailure(Call<List<QuoteResponse>> call, Throwable t) {
-                toaster.showToast(getApplicationContext(), "Error");
+            public void onError(@NonNull Throwable throwable) {
 
             }
         });
+
     }
 
 }
