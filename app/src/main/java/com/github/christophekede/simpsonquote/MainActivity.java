@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ListAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
+
     private static final String BASE_URL = "https://thesimpsonsquoteapi.glitch.me/";
     private ApiCaller caller = new ApiCaller();
 
@@ -50,25 +51,24 @@ public class MainActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         List<String> input = new ArrayList<>();
-
-        for (int i = 0; i < 100; i++) {
-            input.add("Test" + i);
-        }
-
-        mAdapter = new ListAdapter(input);
-        recyclerView.setAdapter(mAdapter);
         initialQuotes();
+
+
+
 
 
 
     }
 
     private void initialQuotes(){
-        caller.getRandomQuote(new QuoteCallback() {
+        caller.get10Quotes(new QuoteCallback() {
             @Override
             public void onSuccess(ApiCallerResponse resp) {
                 if(resp.getStatus() == "ok"){
                     Toaster.showToast(getApplicationContext(), "Yesysy");
+
+                    mAdapter = new ListAdapter(resp.getQuotes());
+                    recyclerView.setAdapter(mAdapter);
                 }
             }
 

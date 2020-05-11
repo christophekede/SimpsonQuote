@@ -46,7 +46,7 @@ public class ApiCaller {
     }
 
 
-    public ApiCallerResponse getRandomQuote( @Nullable final QuoteCallback callback){
+    public void getRandomQuote( @Nullable final QuoteCallback callback){
         Call<List<QuoteResponse>> call = quoteInterface.loadRandomQuote();
 
         call.enqueue(new Callback<List<QuoteResponse>>() {
@@ -56,9 +56,8 @@ public class ApiCaller {
                     List<QuoteResponse> quote = response.body();
                     callback.onSuccess(new ApiCallerResponse("ok", quote));
 
-
                 }else{
-                    res = new ApiCallerResponse("ko", null);
+                    callback.onSuccess(new ApiCallerResponse("ko", null));
 
                 }
 
@@ -68,12 +67,37 @@ public class ApiCaller {
             public void onFailure(Call<List<QuoteResponse>> call, Throwable t) {
                 callback.onError(t);
 
-                res = new ApiCallerResponse("ko", null);
+            }
+        });
+
+        
+    }
+
+    public void get10Quotes( @Nullable final QuoteCallback callback){
+        Call<List<QuoteResponse>> call = quoteInterface.loadQuotes(10);
+
+        call.enqueue(new Callback<List<QuoteResponse>>() {
+            @Override
+            public void onResponse(Call<List<QuoteResponse>> call, Response<List<QuoteResponse>> response) {
+                if(response.isSuccessful() && response.body() !=null){
+                    List<QuoteResponse> quote = response.body();
+                    callback.onSuccess(new ApiCallerResponse("ok", quote));
+
+                }else{
+                    callback.onSuccess(new ApiCallerResponse("ko", null));
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<QuoteResponse>> call, Throwable t) {
+                callback.onError(t);
 
             }
         });
-        return res;
-        
+
+
     }
 
     public void post(){ }
