@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -17,7 +19,9 @@ import com.github.christophekede.simpsonquote.server.ApiCallerResponse;
 import com.github.christophekede.simpsonquote.server.QuoteResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,10 +39,12 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String BASE_URL = "https://thesimpsonsquoteapi.glitch.me/";
     private ApiCaller caller = new ApiCaller();
+    private SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPref = getSharedPreferences("simpsonquote", Context.MODE_PRIVATE);
 
         caller = new ApiCaller();
 
@@ -51,7 +57,13 @@ public class MainActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         List<String> input = new ArrayList<>();
-        initialQuotes();
+        List<QuoteResponse> quoteList = getDataFromCache();
+        if(quoteList != null){
+            showList(quoteList);
+        }else{
+            initialQuotes();
+        }
+
 
 
 
@@ -60,15 +72,23 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private List<QuoteResponse> getDataFromCache() {
+        String jsonQuote= sharedPref.getString("jsonQuote", null );
+
+        if(jsonQuote == null) return  null;
+        Type listType = new TypeToken<List<QuoteResponse>>(){}.getType();
+        return caller.getGson().fromJson(jsonQuote, listType);
+    }
+
     private void initialQuotes(){
         caller.get10Quotes(new QuoteCallback() {
             @Override
             public void onSuccess(ApiCallerResponse resp) {
                 if(resp.getStatus() == "ok"){
                     Toaster.showToast(getApplicationContext(), "Yesysy");
+                    showList(resp.getQuotes());
+                    saveQuotes(resp.getQuotes());
 
-                    mAdapter = new ListAdapter(resp.getQuotes());
-                    recyclerView.setAdapter(mAdapter);
                 }
             }
 
@@ -78,6 +98,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void saveQuotes(List<QuoteResponse> quotes) {
+        String jsonString = caller.getGson().toJson(quotes);
+        sharedPref.edit()
+                .putString("jsonQuote", jsonString )
+                .apply();
+
+        Toaster.showToast(getApplicationContext(), "List Saved");
+    }
+
+    private void showList(List<QuoteResponse> listQuote){
+        mAdapter = new ListAdapter(listQuote);
+        recyclerView.setAdapter(mAdapter);
     }
 
 }

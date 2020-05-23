@@ -46,7 +46,7 @@ public class ApiCaller {
     }
 
 
-    public void getRandomQuote( @Nullable final QuoteCallback callback){
+    public void   getRandomQuote( @Nullable final QuoteCallback callback){
         Call<List<QuoteResponse>> call = quoteInterface.loadRandomQuote();
 
         call.enqueue(new Callback<List<QuoteResponse>>() {
@@ -98,6 +98,10 @@ public class ApiCaller {
         });
 
 
+    }
+
+    public Gson getGson(){
+        return gson;
     }
 
     public void post(){ }
