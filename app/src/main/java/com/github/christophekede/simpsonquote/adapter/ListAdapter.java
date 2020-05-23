@@ -18,7 +18,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
+    public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     private List<QuoteResponse> values;
 
     // Provide a reference to the views for each data item

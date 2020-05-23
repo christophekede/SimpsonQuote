@@ -33,7 +33,7 @@ public class QuoteResponse {
         this.direction = direction;
     }
 
-    private String quote;
+        private String quote;
     private String character;
     private String image;
 
