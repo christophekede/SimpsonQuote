@@ -1,17 +1,27 @@
 # SimpsonQuote
+
  Appli permettant de recenser les citations de différents personnages des Simpsons issue de l'api https://thesimpsonsquoteapi.glitch.me/
  Basé sur l'architecture  client/server
 
 ## La page principale
+
   Affiche une liste de 10 citations de différents personnages de la serie Simpson et leur nom respectif
-   
+  
+  
+   ![main](https://user-images.githubusercontent.com/34629130/82757510-345e0200-9de1-11ea-987c-fed5fd0d6ce5.PNG)
+
  
 ## La page Detail
 
- La page détail contient, un peu plus d'informations sur un personnage (Citation, photos, nom)
+ La page détail contient, un peu plus d'informations sur un personnage (Citation, photo, nom)
+ 
+ ![detail](https://user-images.githubusercontent.com/34629130/82757603-ce25af00-9de1-11ea-8d78-a81e2cdf7018.PNG)
+
+ 
 
 
 ## Les fonctionnalités 
+
  1. Page principale
    - Afficher des citations 
    - Afficher le nom des personnages
@@ -27,19 +37,19 @@
    - Sauvergarder les citations de la page principale pour une utilisation off-line
 
 
-  ## Tasks 
+## Tasks 
   
-  - [x] Mise en place d'une architecture client/server
-  - [x] Afficher la liste des personnages & citations
-  - [x] Passer des datas d'une page à une autre (Intent)
-  - [x] Afficher les détails de citations
-  - [x] Afficher l'image d'un personnage dans la page détail (Picasso)
-  - [x] Sauvegarder les données 
-  - [x] Ajouter un bouton retour en arrière dans la page Detail
+    - [x] Mise en place d'une architecture client/server
+    - [x] Afficher la liste des personnages & citations
+    - [x] Passer des datas d'une page à une autre (Intent)
+    - [x] Afficher les détails de citations
+    - [x] Afficher l'image d'un personnage dans la page détail (Picasso)
+    - [x] Sauvegarder les données 
+    - [x] Ajouter un bouton retour en arrière dans la page Detail
   
-  ## A venir
-  - [ ] Mise en place d'un quizz
-  - [ ] Mettre en place une architecture MVC si nécessaire 
+ ## A venir
+    - [ ] Mise en place d'un quizz
+    - [ ] Mettre en place une architecture MVC si nécessaire 
 
   
   
