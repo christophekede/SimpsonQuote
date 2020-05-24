@@ -38,8 +38,8 @@
   - [x] Ajouter un bouton retour en arrière dans la page Detail
   
   ## A venir
-  - [] Mise en place d'un quizz
-  - [] Mettre en place une architecture MVC si nécessaire 
+  - [ ] Mise en place d'un quizz
+  - [ ] Mettre en place une architecture MVC si nécessaire 
 
   
   
